@@ -46,6 +46,10 @@ public class GameScreen extends BaseScreen {
                 if(areCollided(contact, "girl", "floor")){
                     girl.setJumping(false);
                 }
+
+                if(areCollided(contact, "girl", "spike")){
+                    girl.setAlive(false);
+                }
             }
 
             @Override
@@ -67,13 +71,14 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void show() {
+        stage.setDebugAll(true);
         Texture girlTexture = game.getManager().get("girl.png");
         TextureRegion girlRegion = new TextureRegion(girlTexture, 0, 0, 140, 185);
         Texture floorTexture = game.getManager().get("floor.png");
         Texture overfloorTexture = game.getManager().get("overfloor.png");
         Texture spikeTexture = game.getManager().get("spike.png");
-        girl = new GirlEntity(world, girlRegion, new Vector2(1, 1.5f));
-        floorList.add(new FloorEntity(world, floorTexture, overfloorTexture, 0, 1000, 1));
+        girl = new GirlEntity(world, girlRegion, new Vector2(2, 1.5f));
+        floorList.add(new FloorEntity(world, floorTexture, overfloorTexture, -10, 1000, 1));
         spikeList.add(new SpikeEntity(world, spikeTexture, 6, 1));
 
         stage.addActor(girl);
@@ -104,6 +109,7 @@ public class GameScreen extends BaseScreen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.getCamera().position.set(stage.getWidth()/3 + girl.getX(), stage.getHeight()/2, 0);
         stage.act();
         world.step(delta, 6, 2);
         stage.draw();

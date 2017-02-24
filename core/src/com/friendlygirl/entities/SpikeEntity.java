@@ -40,22 +40,22 @@ public class SpikeEntity extends Actor {
 
         // Create the body.
         BodyDef def = new BodyDef();                // (1) Give it some definition.
-        def.position.set(x, y + 0.5f);              // (2) Position the body on the world.
+        def.position.set(x, y + 0.25f);              // (2) Position the body on the world.
         body = world.createBody(def);               // (3) Create the body.
 
         // Now give it a shape.
         PolygonShape box = new PolygonShape();      // (1) We will make a polygon.
         Vector2[] vertices = new Vector2[3];        // (2) However vertices will be manually added.
-        vertices[0] = new Vector2(-0.5f, -0.5f);    // (3) Add the vertices for a triangle.
-        vertices[1] = new Vector2(0.5f, -0.5f);
-        vertices[2] = new Vector2(0, 0.5f);
+        vertices[0] = new Vector2(-0.25f, -0.25f);    // (3) Add the vertices for a triangle.
+        vertices[1] = new Vector2(0.25f, -0.25f);
+        vertices[2] = new Vector2(0, 0.25f);
         box.set(vertices);                          // (4) And put them in the shape.
         fixture = body.createFixture(box, 1);       // (5) Create the fixture.
         fixture.setUserData("spike");               // (6) And set the user data to enemy.
         box.dispose();                              // (7) Destroy the shape when you don't need it.
 
         // Position the actor in the screen by converting the meters to pixels.
-        setPosition((x - 0.5f) * PIXELS_IN_METER, y * PIXELS_IN_METER);
+        setPosition((x - 0.25f) * PIXELS_IN_METER, y * PIXELS_IN_METER);
         setSize(0.5f * PIXELS_IN_METER, 0.5f * PIXELS_IN_METER);
     }
 

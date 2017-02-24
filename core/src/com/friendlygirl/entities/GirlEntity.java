@@ -51,19 +51,19 @@ public class GirlEntity extends Actor {
             jump();
         }
 
-        if(Gdx.input.getAccelerometerX()>0){
+        if(Gdx.input.getAccelerometerY()>0.5 && alive){
             Vector2 position = body.getPosition();
-            body.applyForce(2, 0, position.x, position.y, true);
+            body.applyForceToCenter(8, 0, true);
         }
 
-        if(Gdx.input.getAccelerometerX()<0){
+        if(Gdx.input.getAccelerometerY()<-0.5 && alive && body.getPosition().x > 1){
             Vector2 position = body.getPosition();
-            body.applyForce(-2, 0, position.x, position.y, true);
+            body.applyForceToCenter(-8, 0, true);
         }
     }
 
     public void jump() {
-        if(!jumping){
+        if(!jumping && alive){
             jumping = true;
             Vector2 position = body.getPosition();
             body.applyLinearImpulse(0, 15, position.x, position.y, true);
