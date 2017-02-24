@@ -1,6 +1,8 @@
 package com.friendlygirl;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.friendlygirl.entities.FloorEntity;
 import com.friendlygirl.entities.GirlEntity;
@@ -25,9 +28,14 @@ public class GameScreen extends BaseScreen {
     private GirlEntity girl;
     private ArrayList<SpikeEntity> spikeList = new ArrayList<SpikeEntity>();
     private ArrayList<FloorEntity> floorList = new ArrayList<FloorEntity>();
+    private Music gameMusic;
+    private Sound grito, boing;
 
-    public GameScreen(MainGame game) {
+    public GameScreen(final MainGame game) {
         super(game);
+        gameMusic = game.getManager().get("audio/gamemusic.ogg");
+        grito = game.getManager().get("audio/grito.ogg");
+        boing = game.getManager().get("audio/boing.ogg");
         stage = new Stage(new FitViewport(640, 360));
         world = new World(new Vector2(0, -10), true);
         world.setContactListener(new ContactListener() {
@@ -48,13 +56,22 @@ public class GameScreen extends BaseScreen {
                 }
 
                 if(areCollided(contact, "girl", "spike")){
-                    girl.setAlive(false);
+                    if(girl.isAlive()){
+                        girl.setAlive(false);
+                        grito.play();
+                        stage.addAction(Actions.sequence(Actions.delay(1.5f), Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                game.setScreen(game.gameOverScreen);
+                            }
+                        })));
+                    }
                 }
             }
 
             @Override
             public void endContact(Contact contact) {
-
+                boing.play();
             }
 
             @Override
@@ -71,7 +88,7 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void show() {
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
         Texture girlTexture = game.getManager().get("girl.png");
         TextureRegion girlRegion = new TextureRegion(girlTexture, 0, 0, 140, 185);
         Texture floorTexture = game.getManager().get("floor.png");
@@ -89,6 +106,9 @@ public class GameScreen extends BaseScreen {
         for(SpikeEntity spikeEntity : spikeList){
             stage.addActor(spikeEntity);
         }
+
+        gameMusic.setVolume(0.75f);
+        gameMusic.play();
     }
 
     @Override
@@ -103,6 +123,7 @@ public class GameScreen extends BaseScreen {
             spikeEntity.detach();
             spikeEntity.remove();
         }
+        gameMusic.stop();
     }
 
     @Override
@@ -119,5 +140,6 @@ public class GameScreen extends BaseScreen {
     public void dispose() {
         stage.dispose();
         world.dispose();
+        gameMusic.dispose();
     }
 }
