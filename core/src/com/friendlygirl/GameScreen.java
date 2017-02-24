@@ -40,7 +40,7 @@ public class GameScreen extends BaseScreen {
                     return false;
                 }
             }
-
+/////
             @Override
             public void beginContact(Contact contact) {
                 if(areCollided(contact, "girl", "floor")){
