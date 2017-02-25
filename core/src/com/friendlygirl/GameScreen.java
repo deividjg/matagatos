@@ -17,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.friendlygirl.entities.FloorEntity;
 import com.friendlygirl.entities.GirlEntity;
+import com.friendlygirl.entities.Moneda;
+import com.friendlygirl.entities.Puntos;
 import com.friendlygirl.entities.SpikeEntity;
 
 import java.util.ArrayList;
@@ -25,7 +27,9 @@ public class GameScreen extends BaseScreen {
 
     private Stage stage;
     private World world;
+    private Puntos puntos;
     private GirlEntity girl;
+    private Moneda moneda;
     private ArrayList<SpikeEntity> spikeList = new ArrayList<SpikeEntity>();
     private ArrayList<FloorEntity> floorList = new ArrayList<FloorEntity>();
     private Music gameMusic;
@@ -33,6 +37,7 @@ public class GameScreen extends BaseScreen {
 
     public GameScreen(final MainGame game) {
         super(game);
+        puntos = new Puntos();
         gameMusic = game.getManager().get("audio/gamemusic.ogg");
         grito = game.getManager().get("audio/grito.ogg");
         boing = game.getManager().get("audio/boing.ogg");
@@ -71,7 +76,8 @@ public class GameScreen extends BaseScreen {
 
             @Override
             public void endContact(Contact contact) {
-                boing.play();
+                if(girl.isAlive())
+                    boing.play();
             }
 
             @Override
@@ -93,12 +99,16 @@ public class GameScreen extends BaseScreen {
         TextureRegion girlRegion = new TextureRegion(girlTexture, 0, 0, 140, 185);
         Texture floorTexture = game.getManager().get("floor.png");
         Texture overfloorTexture = game.getManager().get("overfloor.png");
-        Texture spikeTexture = game.getManager().get("spike.png");
+        Texture spikeTexture = game.getManager().get("spikeblood.png");
+        Texture monedaTexture = game.getManager().get("moneda.png");
+        TextureRegion monedaRegion = new TextureRegion(monedaTexture, 0, 0, 290, 348);
         girl = new GirlEntity(world, girlRegion, new Vector2(2, 1.5f));
         floorList.add(new FloorEntity(world, floorTexture, overfloorTexture, -10, 1000, 1));
         spikeList.add(new SpikeEntity(world, spikeTexture, 6, 1));
+        moneda = new Moneda(monedaRegion, new Vector2(5.9f, 1.9f));
 
         stage.addActor(girl);
+        stage.addActor(moneda);
 
         for(FloorEntity floorEntity : floorList){
             stage.addActor(floorEntity);
@@ -107,33 +117,38 @@ public class GameScreen extends BaseScreen {
             stage.addActor(spikeEntity);
         }
 
-        gameMusic.setVolume(0.75f);
+        stage.addActor(puntos);
+
+        gameMusic.setLooping(true);
         gameMusic.play();
     }
 
     @Override
     public void hide() {
+        stage.clear();
+
         girl.detach();
-        girl.remove();
+
         for(FloorEntity floorEntity : floorList){
             floorEntity.detach();
-            floorEntity.remove();
         }
         for(SpikeEntity spikeEntity : spikeList){
             spikeEntity.detach();
-            spikeEntity.remove();
         }
         gameMusic.stop();
+        floorList.clear();
+        spikeList.clear();
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.4f, 0.5f, 0.8f, 1f);
+        Gdx.gl.glClearColor(0.2f, 0.6f, 0.9f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.getCamera().position.set(stage.getWidth()/3 + girl.getX(), stage.getHeight()/2, 0);
         stage.act();
         world.step(delta, 6, 2);
         stage.draw();
+
     }
 
     @Override
@@ -141,5 +156,7 @@ public class GameScreen extends BaseScreen {
         stage.dispose();
         world.dispose();
         gameMusic.dispose();
+        grito.dispose();
+        boing.dispose();
     }
 }

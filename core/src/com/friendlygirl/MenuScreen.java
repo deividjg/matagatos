@@ -12,68 +12,66 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-public class GameOverScreen extends BaseScreen {
+public class MenuScreen extends BaseScreen {
 
     private Stage stage;
     private Image image;
     private Skin skin;
-    private TextButton reintentar, menu;
-    private Music gameovermusic;
+    private TextButton comenzar, salir;
+    private Music menumusic;
 
-    public GameOverScreen(final MainGame game) {
+    public MenuScreen(final MainGame game) {
         super(game);
 
         stage = new Stage(new FitViewport(640, 360));
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
-        image = new Image(game.getManager().get("gameover.png", Texture.class));
-        reintentar = new TextButton("Reintentar", skin);
-        menu = new TextButton("Menu", skin);
-        reintentar.addCaptureListener(new ChangeListener() {
+        image = new Image(game.getManager().get("logo.png", Texture.class));
+        comenzar = new TextButton("Comenzar", skin);
+        salir = new TextButton("Salir", skin);
+        comenzar.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(game.gameScreen);
             }
         });
-
-        menu.addCaptureListener(new ChangeListener() {
+        salir.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(game.menuScreen);
+                Gdx.app.exit();
             }
         });
 
-
         image.setPosition(320 - image.getWidth()/2, image.getHeight()/2);
-        reintentar.setSize(150, 100);
-        menu.setSize(150, 100);
-        reintentar.setPosition(100, 360 - image.getHeight() - reintentar.getHeight()/2);
-        menu.setPosition(540 - menu.getWidth(), 360 - image.getHeight() - menu.getHeight()/2);
+        comenzar.setSize(150, 100);
+        salir.setSize(150, 100);
+        comenzar.setPosition(100, 360 - image.getHeight() - comenzar.getHeight()/2);
+        salir.setPosition(540 - salir.getWidth(), 360 - image.getHeight() - salir.getHeight()/2);
 
         stage.addActor(image);
-        stage.addActor(reintentar);
-        stage.addActor(menu);
+        stage.addActor(comenzar);
+        stage.addActor(salir);
 
-        gameovermusic = game.getManager().get("audio/gameovermusic.ogg");
+        menumusic = game.getManager().get("audio/menumusic.ogg");
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        gameovermusic.setLooping(true);
-        gameovermusic.play();
+        menumusic.setLooping(true);
+        menumusic.play();
     }
 
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
-        gameovermusic.stop();
+        menumusic.stop();
     }
 
     @Override
     public void dispose() {
         stage.dispose();
-        gameovermusic.dispose();
+        menumusic.dispose();
     }
 
     @Override
