@@ -6,36 +6,29 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Puntos extends Actor {
+public class Texto extends Actor {
 
     private BitmapFont font;
-    private int puntos;
+
+    private String texto;
     private Vector2 posicion;
 
-    public Puntos(Vector2 posicion) {
+    public Texto(String texto, Vector2 posicion) {
         font = new BitmapFont(Gdx.files.internal("fuentes/font.fnt"), Gdx.files.internal("fuentes/font.png"), false);
-        puntos = 0;
+        this.texto = texto;
         this.posicion = posicion;
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        font.draw(batch, "Puntos: " + puntos, posicion.x, posicion.y);
+        font.draw(batch, texto, posicion.x, posicion.y);
     }
 
-    public int getPuntos() {
-        return puntos;
+    public String getTexto() {
+        return texto;
     }
 
-    public void setPuntos(int puntos) {
-        this.puntos = puntos;
-    }
-
-    public Vector2 getPosicion() {
-        return posicion;
-    }
-
-    public void setPosicion(Vector2 posicion) {
-        this.posicion = posicion;
+    public void setTexto(String texto) {
+        this.texto = texto;
     }
 }

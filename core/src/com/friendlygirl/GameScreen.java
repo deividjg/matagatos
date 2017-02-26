@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -23,6 +24,7 @@ import com.friendlygirl.entities.Puntos;
 import com.friendlygirl.entities.SpikeEntity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class GameScreen extends BaseScreen {
 
@@ -30,20 +32,20 @@ public class GameScreen extends BaseScreen {
     private World world;
     private Puntos puntos;
     private GirlEntity girl;
-    private Moneda moneda;
     private ArrayList<SpikeEntity> spikeList = new ArrayList<SpikeEntity>();
     private ArrayList<FloorEntity> floorList = new ArrayList<FloorEntity>();
     private ArrayList<Moneda> listaMonedas = new ArrayList<Moneda>();
     private ArrayList<PinchoMovil> listaPinchosMoviles = new ArrayList<PinchoMovil>();
     private Music gameMusic;
-    private Sound grito, boing;
+    private Sound grito, boing, sonidoMoneda;
 
     public GameScreen(final MainGame game) {
         super(game);
-        puntos = new Puntos();
+        puntos = new Puntos(new Vector2(50, 350));
         gameMusic = game.getManager().get("audio/gamemusic.ogg");
         grito = game.getManager().get("audio/grito.ogg");
         boing = game.getManager().get("audio/boing.ogg");
+        sonidoMoneda = game.getManager().get("audio/moneda.mp3");
         stage = new Stage(new FitViewport(640, 360));
         world = new World(new Vector2(0, -10), true);
         world.setContactListener(new ContactListener() {
@@ -110,10 +112,10 @@ public class GameScreen extends BaseScreen {
         spikeList.add(new SpikeEntity(world, spikeTexture, 6, 1));
         spikeList.add(new SpikeEntity(world, spikeTexture, 11, 2));
         listaPinchosMoviles.add(new PinchoMovil(world, pinchoMovilTexture, 4, 1));
-        listaMonedas.add(moneda = new Moneda(monedaRegion, new Vector2(5.9f, 2.5f)));
-        listaMonedas.add(moneda = new Moneda(monedaRegion, new Vector2(10.9f, 3.5f)));
-        listaMonedas.add(moneda = new Moneda(monedaRegion, new Vector2(18.5f, 3)));
-        listaMonedas.add(moneda = new Moneda(monedaRegion, new Vector2(19.5f, 3)));
+        listaMonedas.add(new Moneda(monedaRegion, new Vector2(5.9f, 2.5f)));
+        listaMonedas.add(new Moneda(monedaRegion, new Vector2(10.9f, 3.5f)));
+        listaMonedas.add(new Moneda(monedaRegion, new Vector2(18.5f, 3)));
+        listaMonedas.add(new Moneda(monedaRegion, new Vector2(19.5f, 3)));
         girl = new GirlEntity(world, girlRegion, new Vector2(2, 1.5f));
 
         for(FloorEntity floorEntity : floorList){
@@ -157,6 +159,7 @@ public class GameScreen extends BaseScreen {
         spikeList.clear();
         listaPinchosMoviles.clear();
         listaMonedas.clear();
+        puntos.setPuntos(0);
     }
 
     @Override
@@ -176,10 +179,10 @@ public class GameScreen extends BaseScreen {
         for(Moneda moneda : listaMonedas){
             if(moneda.isDisponible()){
                 if(girl.getX() + girl.getWidth() > moneda.getX() && girl.getX() < moneda.getX() + moneda.getWidth()){
-                    System.out.println("moneda");
                     puntos.setPuntos(puntos.getPuntos() + 10);
                     moneda.setDisponible(false);
                     moneda.remove();
+                    sonidoMoneda.play();
                 }
             }
         }
@@ -191,9 +194,10 @@ public class GameScreen extends BaseScreen {
         }
     }
 
-    private void muere(){
+    private void muere() {
         girl.setAlive(false);
         grito.play();
+        guardaPuntos(puntos.getPuntos());
 
         stage.addAction(Actions.sequence(Actions.run(new Runnable() {
             @Override
@@ -203,6 +207,23 @@ public class GameScreen extends BaseScreen {
         })));
     }
 
+    protected  void guardaPuntos(int nuevaPuntuacion) {
+        ArrayList<Integer> listaPuntos = new ArrayList<Integer>();
+        for(int i = 1; i <= 5; i++) {
+            listaPuntos.add(game.preferences.getInteger(i + ""));
+        }
+        Collections.sort(listaPuntos);
+        if(nuevaPuntuacion > listaPuntos.get(0)){
+            listaPuntos.set(0, nuevaPuntuacion);
+        }
+        Collections.sort(listaPuntos);
+        for(int i = 1; i <= 5; i++) {
+            game.preferences.putInteger(i + "", listaPuntos.get(5-i));
+        }
+        game.preferences.flush();
+        game.maxPuntuaciones.actualiza();
+    }
+
     @Override
     public void dispose() {
         stage.dispose();
@@ -210,5 +231,6 @@ public class GameScreen extends BaseScreen {
         gameMusic.dispose();
         grito.dispose();
         boing.dispose();
+        sonidoMoneda.dispose();
     }
 }

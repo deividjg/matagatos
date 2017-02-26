@@ -1,6 +1,8 @@
 package com.friendlygirl;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -12,6 +14,8 @@ public class MainGame extends Game {
     protected GameScreen gameScreen;
     protected GameOverScreen gameOverScreen;
     protected MenuScreen menuScreen;
+    protected MaxPuntScreen maxPuntuaciones;
+    protected Preferences preferences;
 
     @Override
     public void create() {
@@ -29,16 +33,20 @@ public class MainGame extends Game {
         manager.load("audio/gameovermusic.ogg", Music.class);
         manager.load("audio/boing.ogg", Sound.class);
         manager.load("audio/grito.ogg", Sound.class);
+        manager.load("audio/moneda.mp3", Sound.class);
         manager.finishLoading();
+
+        preferences = Gdx.app.getPreferences("Preferencias");
 
         gameScreen = new GameScreen(this);
         gameOverScreen = new GameOverScreen(this);
         menuScreen = new MenuScreen(this);
+        maxPuntuaciones = new MaxPuntScreen(this);
 
-        setScreen(new MenuScreen(this));
+        setScreen(menuScreen);
     }
 
-    public AssetManager getManager() {
+    protected AssetManager getManager() {
         return manager;
     }
 }

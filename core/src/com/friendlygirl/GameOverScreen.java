@@ -45,8 +45,8 @@ public class GameOverScreen extends BaseScreen {
 
 
         image.setPosition(320 - image.getWidth()/2, image.getHeight()/2);
-        reintentar.setSize(150, 100);
-        menu.setSize(150, 100);
+        reintentar.setSize(150, 70);
+        menu.setSize(150, 70);
         reintentar.setPosition(100, 360 - image.getHeight() - reintentar.getHeight()/2);
         menu.setPosition(540 - menu.getWidth(), 360 - image.getHeight() - menu.getHeight()/2);
 

@@ -17,7 +17,7 @@ public class MenuScreen extends BaseScreen {
     private Stage stage;
     private Image image;
     private Skin skin;
-    private TextButton comenzar, salir;
+    private TextButton comenzar, puntuaciones, salir;
     private Music menumusic;
 
     public MenuScreen(final MainGame game) {
@@ -28,11 +28,18 @@ public class MenuScreen extends BaseScreen {
 
         image = new Image(game.getManager().get("logo.png", Texture.class));
         comenzar = new TextButton("Comenzar", skin);
+        puntuaciones = new TextButton("Puntuaciones", skin);
         salir = new TextButton("Salir", skin);
         comenzar.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(game.gameScreen);
+            }
+        });
+        puntuaciones.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(game.maxPuntuaciones);
             }
         });
         salir.addCaptureListener(new ChangeListener() {
@@ -42,14 +49,17 @@ public class MenuScreen extends BaseScreen {
             }
         });
 
-        image.setPosition(320 - image.getWidth()/2, image.getHeight()/2);
-        comenzar.setSize(150, 100);
-        salir.setSize(150, 100);
-        comenzar.setPosition(100, 360 - image.getHeight() - comenzar.getHeight()/2);
-        salir.setPosition(540 - salir.getWidth(), 360 - image.getHeight() - salir.getHeight()/2);
+        image.setPosition(320 - image.getWidth()/2, 120);
+        comenzar.setSize(150, 70);
+        puntuaciones.setSize(150, 70);
+        salir.setSize(150, 70);
+        comenzar.setPosition(50, 20);
+        puntuaciones.setPosition(250, 20);
+        salir.setPosition(450, 20);
 
         stage.addActor(image);
         stage.addActor(comenzar);
+        stage.addActor(puntuaciones);
         stage.addActor(salir);
 
         menumusic = game.getManager().get("audio/menumusic.ogg");
