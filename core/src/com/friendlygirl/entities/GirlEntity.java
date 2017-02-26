@@ -1,6 +1,8 @@
 package com.friendlygirl.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -51,14 +53,12 @@ public class GirlEntity extends Actor {
             jump();
         }
 
-        if(Gdx.input.getAccelerometerY()>0.5 && alive){
-            Vector2 position = body.getPosition();
-            body.applyForceToCenter(8, 0, true);
+        if(Gdx.input.getAccelerometerY()>0.5 && alive || Gdx.input.isKeyPressed(Keys.D) && alive){
+            body.applyForceToCenter(10, 0, true);
         }
 
-        if(Gdx.input.getAccelerometerY()<-0.5 && alive && body.getPosition().x > 1){
-            Vector2 position = body.getPosition();
-            body.applyForceToCenter(-8, 0, true);
+        if(Gdx.input.getAccelerometerY()<-0.5 && alive && body.getPosition().x > 1 || Gdx.input.isKeyPressed(Keys.A) && alive && body.getPosition().x > 1 ){
+            body.applyForceToCenter(-10, 0, true);
         }
     }
 

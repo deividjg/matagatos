@@ -20,6 +20,7 @@ public class MainGame extends Game {
         manager.load("floor.png", Texture.class );
         manager.load("overfloor.png", Texture.class );
         manager.load("spikeblood.png", Texture.class );
+        manager.load("spikebloodinverse.png", Texture.class);
         manager.load("logo.png", Texture.class);
         manager.load("gameover.png", Texture.class);
         manager.load("moneda.png", Texture.class);

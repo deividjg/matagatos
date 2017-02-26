@@ -11,10 +11,12 @@ public class Moneda extends Actor {
 
     TextureRegion textureRegion;
     Vector2 posicion;
+    boolean disponible;
 
     public Moneda(TextureRegion textureRegion, Vector2 posicion) {
         this.textureRegion = textureRegion;
         this.posicion = posicion;
+        disponible = true;
         setSize(0.2f * PIXELS_IN_METER, 0.2f * PIXELS_IN_METER);
     }
 
@@ -22,5 +24,13 @@ public class Moneda extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         setPosition(posicion.x * PIXELS_IN_METER, posicion.y * PIXELS_IN_METER);
         batch.draw(textureRegion, getX(), getY(), getWidth(), getHeight());
+    }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
     }
 }
