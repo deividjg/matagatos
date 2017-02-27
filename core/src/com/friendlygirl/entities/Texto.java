@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class Texto extends Actor {
 
     private BitmapFont font;
-
     private String texto;
     private Vector2 posicion;
 

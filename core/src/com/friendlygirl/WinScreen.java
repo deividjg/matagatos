@@ -3,38 +3,38 @@ package com.friendlygirl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.friendlygirl.entities.Texto;
 
-public class GameOverScreen extends BaseScreen {
-
+public class WinScreen extends BaseScreen {
     private Stage stage;
-    private Image image;
+    private Texto texto;
     private Skin skin;
     private TextButton reintentar, menu;
-    private Music gameovermusic;
+    private Music nivelsuperadomusic;
 
-    public GameOverScreen(final MainGame game) {
+    public WinScreen(final MainGame game) {
         super(game);
 
         stage = new Stage(new FitViewport(640, 360));
         skin = new Skin(Gdx.files.internal("skin/rainbow-ui.json"));
-        image = new Image(game.getManager().get("gameover.png", Texture.class));
-        reintentar = new TextButton("Reintentar", skin);
-        menu = new TextButton("Menu", skin);
 
+        texto = new Texto("¡Nivel superado!", new Vector2(200, 250));
+        reintentar = new TextButton("Rejugar", skin);
+        menu = new TextButton("Menu", skin);
         reintentar.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(game.gameScreen);
             }
         });
+
         menu.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -42,36 +42,34 @@ public class GameOverScreen extends BaseScreen {
             }
         });
 
-        image.setPosition(320 - image.getWidth()/2, 90);
         reintentar.setSize(150, 70);
         menu.setSize(150, 70);
         reintentar.setPosition(100, 20);
         menu.setPosition(540 - menu.getWidth(), 20);
 
-        stage.addActor(image);
+        stage.addActor(texto);
         stage.addActor(reintentar);
         stage.addActor(menu);
 
-        gameovermusic = game.getManager().get("audio/gameovermusic.ogg");
+        nivelsuperadomusic = game.getManager().get("audio/nivelsuperadomusic.mp3");
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        gameovermusic.setLooping(true);
-        gameovermusic.play();
+        nivelsuperadomusic.play();
     }
 
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
-        gameovermusic.stop();
+        nivelsuperadomusic.stop();
     }
 
     @Override
     public void dispose() {
         stage.dispose();
-        gameovermusic.dispose();
+        nivelsuperadomusic.dispose();
     }
 
     @Override

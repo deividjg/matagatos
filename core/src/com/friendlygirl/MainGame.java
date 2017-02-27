@@ -13,6 +13,7 @@ public class MainGame extends Game {
     private AssetManager manager;
     protected GameScreen gameScreen;
     protected GameOverScreen gameOverScreen;
+    protected WinScreen winScreen;
     protected MenuScreen menuScreen;
     protected MaxPuntScreen maxPuntuaciones;
     protected Preferences preferences;
@@ -20,11 +21,11 @@ public class MainGame extends Game {
     @Override
     public void create() {
         manager = new AssetManager();
-        manager.load("girl.png", Texture.class );
-        manager.load("floor.png", Texture.class );
-        manager.load("overfloor.png", Texture.class );
-        manager.load("spikeblood.png", Texture.class );
-        manager.load("spikebloodinverse.png", Texture.class);
+        manager.load("jugador.png", Texture.class );
+        manager.load("suelo.png", Texture.class );
+        manager.load("sobresuelo.png", Texture.class );
+        manager.load("pincho.png", Texture.class );
+        manager.load("pinchoinverso.png", Texture.class);
         manager.load("logo.png", Texture.class);
         manager.load("gameover.png", Texture.class);
         manager.load("moneda.png", Texture.class);
@@ -35,12 +36,14 @@ public class MainGame extends Game {
         manager.load("audio/boing.ogg", Sound.class);
         manager.load("audio/grito.ogg", Sound.class);
         manager.load("audio/moneda.mp3", Sound.class);
+        manager.load("audio/nivelsuperadomusic.mp3", Music.class);
         manager.finishLoading();
 
         preferences = Gdx.app.getPreferences("Preferencias");
 
         gameScreen = new GameScreen(this);
         gameOverScreen = new GameOverScreen(this);
+        winScreen = new WinScreen(this);
         menuScreen = new MenuScreen(this);
         maxPuntuaciones = new MaxPuntScreen(this);
 

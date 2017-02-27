@@ -12,20 +12,19 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import static com.friendlygirl.Constantes.PIXELS_EN_METROS;
 
-public class PinchoMovil extends Actor {
+public class Pincho extends Actor {
 
     private Texture texture;
     private World world;
     private Body body;
     private Fixture fixture;
 
-    public PinchoMovil(World world, Texture texture, float x, float y) {
-        this.texture = texture;
+    public Pincho(World world, Texture texture, float x, float y) {
         this.world = world;
+        this.texture = texture;
 
         BodyDef def = new BodyDef();
         def.position.set(x, y + 0.25f);
-        def.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(def);
 
         PolygonShape box = new PolygonShape();
@@ -34,7 +33,7 @@ public class PinchoMovil extends Actor {
         vertices[1] = new Vector2(0.25f, -0.25f);
         vertices[2] = new Vector2(0, 0.25f);
         box.set(vertices);
-        fixture = body.createFixture(box, 3);
+        fixture = body.createFixture(box, 1);
         fixture.setUserData("pincho");
         box.dispose();
 
@@ -44,17 +43,7 @@ public class PinchoMovil extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        setPosition((body.getPosition().x - 0.25f) * PIXELS_EN_METROS, (body.getPosition().y -0.25f) * PIXELS_EN_METROS);
         batch.draw(texture, getX(), getY(), getWidth(), getHeight());
-    }
-
-    @Override
-    public void act(float delta) {
-        if(body.getPosition().y < 1.3){
-            body.setLinearVelocity(0, 4.8f);
-        }else if(body.getPosition().y > 1.3){
-            body.applyForceToCenter(0, 2, true);
-        }
     }
 
     public void detach() {

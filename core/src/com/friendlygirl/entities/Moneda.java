@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import static com.friendlygirl.Constants.PIXELS_IN_METER;
+import static com.friendlygirl.Constantes.PIXELS_EN_METROS;
 
 public class Moneda extends Actor {
 
@@ -17,12 +17,12 @@ public class Moneda extends Actor {
         this.textureRegion = textureRegion;
         this.posicion = posicion;
         disponible = true;
-        setSize(0.2f * PIXELS_IN_METER, 0.2f * PIXELS_IN_METER);
+        setSize(0.2f * PIXELS_EN_METROS, 0.2f * PIXELS_EN_METROS);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        setPosition(posicion.x * PIXELS_IN_METER, posicion.y * PIXELS_IN_METER);
+        setPosition(posicion.x * PIXELS_EN_METROS, posicion.y * PIXELS_EN_METROS);
         batch.draw(textureRegion, getX(), getY(), getWidth(), getHeight());
     }
 

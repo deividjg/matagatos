@@ -9,20 +9,16 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import static com.friendlygirl.Constants.*;
+import static com.friendlygirl.Constantes.*;
 
-public class FloorEntity extends Actor {
-
+public class Suelo extends Actor {
 
     private Texture floor, overfloor;
-
     private World world;
-
     private Body body;
-
     private Fixture fixture;
 
-    public FloorEntity(World world, Texture floor, Texture overfloor, float x, float width, float y) {
+    public Suelo(World world, Texture floor, Texture overfloor, float x, float width, float y) {
         this.world = world;
         this.floor = floor;
         this.overfloor = overfloor;
@@ -34,11 +30,11 @@ public class FloorEntity extends Actor {
         PolygonShape box = new PolygonShape();
         box.setAsBox(width / 2, 0.5f);
         fixture = body.createFixture(box, 1);
-        fixture.setUserData("floor");
+        fixture.setUserData("suelo");
         box.dispose();
 
-        setSize(width * PIXELS_IN_METER, PIXELS_IN_METER);
-        setPosition(x * PIXELS_IN_METER, (y - 1) * PIXELS_IN_METER);
+        setSize(width * PIXELS_EN_METROS, PIXELS_EN_METROS);
+        setPosition(x * PIXELS_EN_METROS, (y - 1) * PIXELS_EN_METROS);
     }
 
     @Override

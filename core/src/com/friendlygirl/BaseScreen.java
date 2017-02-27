@@ -1,6 +1,5 @@
 package com.friendlygirl;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 
 public class BaseScreen implements Screen {
