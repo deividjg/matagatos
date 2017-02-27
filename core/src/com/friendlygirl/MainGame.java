@@ -15,7 +15,7 @@ public class MainGame extends Game {
     protected GameOverScreen gameOverScreen;
     protected WinScreen winScreen;
     protected MenuScreen menuScreen;
-    protected MaxPuntScreen maxPuntuaciones;
+    protected MaxPuntScreen maxPuntuacionesScreen;
     protected Preferences preferences;
 
     @Override
@@ -45,7 +45,7 @@ public class MainGame extends Game {
         gameOverScreen = new GameOverScreen(this);
         winScreen = new WinScreen(this);
         menuScreen = new MenuScreen(this);
-        maxPuntuaciones = new MaxPuntScreen(this);
+        maxPuntuacionesScreen = new MaxPuntScreen(this);
 
         setScreen(menuScreen);
     }

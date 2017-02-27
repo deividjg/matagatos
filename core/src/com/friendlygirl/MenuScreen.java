@@ -12,15 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import javax.sound.midi.SysexMessage;
 
 public class MenuScreen extends BaseScreen {
 
     private Stage stage;
     private Image image;
     private Skin skin;
-    private TextButton inicio, puntos, salir;
+    private TextButton inicio, puntos, salir, musicOnOff;
     private Music menumusic;
 
     public MenuScreen(final MainGame game) {
@@ -33,6 +32,8 @@ public class MenuScreen extends BaseScreen {
         inicio = new TextButton("Inicio", skin);
         puntos = new TextButton("Puntos", skin);
         salir = new TextButton("Salir", skin);
+        musicOnOff = new TextButton("Musica", skin);
+
         inicio.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -42,7 +43,7 @@ public class MenuScreen extends BaseScreen {
         puntos.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(game.maxPuntuaciones);
+                game.setScreen(game.maxPuntuacionesScreen);
             }
         });
         salir.addCaptureListener(new ChangeListener() {
@@ -51,19 +52,36 @@ public class MenuScreen extends BaseScreen {
                 Gdx.app.exit();
             }
         });
+        musicOnOff.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(game.preferences.getBoolean("musica")){
+                    game.preferences.putBoolean("musica", false);
+                    menumusic.stop();
+                }else{
+                    game.preferences.putBoolean("musica", true);
+                    menumusic.play();
+                }
+                game.preferences.flush();
+            }
+        });
 
-        image.setPosition(320 - image.getWidth()/2, 120);
-        inicio.setSize(150, 70);
-        puntos.setSize(150, 70);
-        salir.setSize(150, 70);
-        inicio.setPosition(10, 20);
-        puntos.setPosition(250, 20);
-        salir.setPosition(470, 20);
+        image.setSize(200, 200);
+        image.setPosition(320 - image.getWidth()/2, 160);
+        inicio.setSize(200, 70);
+        puntos.setSize(240, 70);
+        salir.setSize(180, 70);
+        musicOnOff.setSize(250, 70);
+        inicio.setPosition(5, 120);
+        puntos.setPosition(5, 20);
+        salir.setPosition(430, 120);
+        musicOnOff.setPosition(360, 20);
 
         stage.addActor(image);
         stage.addActor(inicio);
         stage.addActor(puntos);
         stage.addActor(salir);
+        stage.addActor(musicOnOff);
 
         menumusic = game.getManager().get("audio/menumusic.ogg");
     }

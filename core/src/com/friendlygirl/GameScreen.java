@@ -256,7 +256,7 @@ public class GameScreen extends BaseScreen {
             game.preferences.putInteger(i + "", listaPuntos.get(5-i));
         }
         game.preferences.flush();
-        game.maxPuntuaciones.actualiza();
+        game.maxPuntuacionesScreen.actualiza();
     }
 
     @Override

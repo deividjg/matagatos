@@ -34,8 +34,6 @@ public class MaxPuntScreen extends BaseScreen {
         titulo = new Texto("PUNTUACIONES MAXIMAS", new Vector2(140, 340));
         maxpuntmusic = game.getManager().get("audio/maxpuntmusic.ogg");
 
-        puntosPorDefecto();
-
         listaPunt = new ArrayList<Texto>();
         for(int i = 1; i <= 5; i++) {
             listaPunt.add(new Texto(i + "º    " + game.preferences.getInteger(i + ""), new Vector2(220, 320 - 30*i )));
@@ -92,15 +90,6 @@ public class MaxPuntScreen extends BaseScreen {
     protected  void actualiza(){
         for(int i = 1; i <= 5; i++){
             listaPunt.get(i-1).setTexto(i + "º    " + game.preferences.getInteger(i + ""));
-        }
-        game.preferences.flush();
-    }
-
-    protected void puntosPorDefecto(){
-        if(!game.preferences.contains("i")){
-            for(int i=1; i<=5; i++) {
-                game.preferences.putInteger(i + "", 0);
-            }
         }
     }
 }
