@@ -31,6 +31,7 @@ public class MainGame extends Game {
         manager.load("audio/gamemusic.ogg", Music.class);
         manager.load("audio/menumusic.ogg", Music.class);
         manager.load("audio/gameovermusic.ogg", Music.class);
+        manager.load("audio/maxpuntmusic.ogg", Music.class);
         manager.load("audio/boing.ogg", Sound.class);
         manager.load("audio/grito.ogg", Sound.class);
         manager.load("audio/moneda.mp3", Sound.class);

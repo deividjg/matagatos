@@ -1,6 +1,7 @@
 package com.friendlygirl;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -23,13 +24,15 @@ public class MaxPuntScreen extends BaseScreen {
     private TextButton volver;
     private Texto titulo;
     protected ArrayList<Texto> listaPunt;
+    private Music maxpuntmusic;
 
     public MaxPuntScreen(final MainGame game) {
         super(game);
 
         stage = new Stage(new FitViewport(640, 360));
-        skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("skin/rainbow-ui.json"));
         titulo = new Texto("PUNTUACIONES MAXIMAS", new Vector2(140, 340));
+        maxpuntmusic = game.getManager().get("audio/maxpuntmusic.ogg");
 
         puntosPorDefecto();
 
@@ -61,16 +64,20 @@ public class MaxPuntScreen extends BaseScreen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        maxpuntmusic.setLooping(true);
+        maxpuntmusic.play();
     }
 
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
+        maxpuntmusic.stop();
     }
 
     @Override
     public void dispose() {
         stage.dispose();
+        maxpuntmusic.dispose();
     }
 
     @Override

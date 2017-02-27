@@ -109,13 +109,19 @@ public class GameScreen extends BaseScreen {
         floorList.add(new FloorEntity(world, floorTexture, overfloorTexture, -10, 28, 1));
         floorList.add(new FloorEntity(world, floorTexture, overfloorTexture, 8, 6, 2));
         floorList.add(new FloorEntity(world, floorTexture, overfloorTexture, 20, 20, 1));
+        floorList.add(new FloorEntity(world, floorTexture, overfloorTexture, 42, 20, 1));
+        floorList.add(new FloorEntity(world, floorTexture, overfloorTexture, 52, 8, 2));
         spikeList.add(new SpikeEntity(world, spikeTexture, 6, 1));
         spikeList.add(new SpikeEntity(world, spikeTexture, 11, 2));
+        spikeList.add(new SpikeEntity(world, spikeTexture, 55, 2));
+        spikeList.add(new SpikeEntity(world, spikeTexture, 56, 2));
         listaPinchosMoviles.add(new PinchoMovil(world, pinchoMovilTexture, 4, 1));
+        listaPinchosMoviles.add(new PinchoMovil(world, pinchoMovilTexture, 61, 1));
         listaMonedas.add(new Moneda(monedaRegion, new Vector2(5.9f, 2.5f)));
         listaMonedas.add(new Moneda(monedaRegion, new Vector2(10.9f, 3.5f)));
         listaMonedas.add(new Moneda(monedaRegion, new Vector2(18.5f, 3)));
         listaMonedas.add(new Moneda(monedaRegion, new Vector2(19.5f, 3)));
+        listaMonedas.add(new Moneda(monedaRegion, new Vector2(55.5f, 3)));
         girl = new GirlEntity(world, girlRegion, new Vector2(2, 1.5f));
 
         for(FloorEntity floorEntity : floorList){

@@ -24,7 +24,7 @@ public class GameOverScreen extends BaseScreen {
         super(game);
 
         stage = new Stage(new FitViewport(640, 360));
-        skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("skin/rainbow-ui.json"));
 
         image = new Image(game.getManager().get("gameover.png", Texture.class));
         reintentar = new TextButton("Reintentar", skin);
@@ -44,11 +44,11 @@ public class GameOverScreen extends BaseScreen {
         });
 
 
-        image.setPosition(320 - image.getWidth()/2, image.getHeight()/2);
+        image.setPosition(320 - image.getWidth()/2, 90);
         reintentar.setSize(150, 70);
         menu.setSize(150, 70);
-        reintentar.setPosition(100, 360 - image.getHeight() - reintentar.getHeight()/2);
-        menu.setPosition(540 - menu.getWidth(), 360 - image.getHeight() - menu.getHeight()/2);
+        reintentar.setPosition(100, 20);
+        menu.setPosition(540 - menu.getWidth(), 20);
 
         stage.addActor(image);
         stage.addActor(reintentar);
