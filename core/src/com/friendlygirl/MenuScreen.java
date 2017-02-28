@@ -25,6 +25,11 @@ public class MenuScreen extends BaseScreen {
     public MenuScreen(final MainGame game) {
         super(game);
 
+        if(!game.preferences.contains("musica")){
+            game.preferences.putBoolean("musica", true);
+            game.preferences.flush();
+        }
+
         stage = new Stage(new FitViewport(640, 360));
         skin = new Skin(Gdx.files.internal("skin/rainbow-ui.json"));
 
@@ -90,7 +95,9 @@ public class MenuScreen extends BaseScreen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
         menumusic.setLooping(true);
-        menumusic.play();
+        if(game.preferences.getBoolean("musica")){
+            menumusic.play();
+        }
     }
 
     @Override

@@ -161,7 +161,9 @@ public class GameScreen extends BaseScreen {
         stage.addActor(puntos);
 
         gameMusic.setLooping(true);
-        gameMusic.play();
+        if(game.preferences.getBoolean("musica")){
+            gameMusic.play();
+        }
     }
 
     @Override
@@ -191,9 +193,9 @@ public class GameScreen extends BaseScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.getCamera().position.set(stage.getWidth()/3 + jugador.getX(), stage.getHeight()/2, 0);
         puntos.setPosicion(new Vector2(jugador.getX() - 70, 350));
+        nivelCompletado();
         stage.act();
         compruebaCaida();
-        nivelCompletado();
         world.step(delta, 6, 2);
         stage.draw();
         comprobarColisiones();

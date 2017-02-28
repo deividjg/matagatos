@@ -43,10 +43,10 @@ public class GameOverScreen extends BaseScreen {
         });
 
         image.setPosition(320 - image.getWidth()/2, 90);
-        reintentar.setSize(150, 70);
-        menu.setSize(150, 70);
-        reintentar.setPosition(100, 20);
-        menu.setPosition(540 - menu.getWidth(), 20);
+        reintentar.setSize(350, 70);
+        menu.setSize(200, 70);
+        reintentar.setPosition(15, 20);
+        menu.setPosition(400, 20);
 
         stage.addActor(image);
         stage.addActor(reintentar);
@@ -59,7 +59,9 @@ public class GameOverScreen extends BaseScreen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
         gameovermusic.setLooping(true);
-        gameovermusic.play();
+        if(game.preferences.getBoolean("musica")){
+            gameovermusic.play();
+        }
     }
 
     @Override

@@ -47,7 +47,7 @@ public class MaxPuntScreen extends BaseScreen {
             }
         });
 
-        volver.setSize(150, 70);
+        volver.setSize(230, 70);
         volver.setPosition(320 - volver.getWidth()/2, 20);
 
         stage.addActor(titulo);
@@ -63,7 +63,9 @@ public class MaxPuntScreen extends BaseScreen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
         maxpuntmusic.setLooping(true);
-        maxpuntmusic.play();
+        if(game.preferences.getBoolean("musica")){
+            maxpuntmusic.play();
+        }
     }
 
     @Override

@@ -16,7 +16,7 @@ public class WinScreen extends BaseScreen {
     private Stage stage;
     private Texto texto;
     private Skin skin;
-    private TextButton reintentar, menu;
+    private TextButton rejugar, menu;
     private Music nivelsuperadomusic;
 
     public WinScreen(final MainGame game) {
@@ -26,9 +26,9 @@ public class WinScreen extends BaseScreen {
         skin = new Skin(Gdx.files.internal("skin/rainbow-ui.json"));
 
         texto = new Texto("¡Nivel superado!", new Vector2(200, 250));
-        reintentar = new TextButton("Rejugar", skin);
+        rejugar = new TextButton("Rejugar", skin);
         menu = new TextButton("Menu", skin);
-        reintentar.addCaptureListener(new ChangeListener() {
+        rejugar.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(game.gameScreen);
@@ -42,13 +42,13 @@ public class WinScreen extends BaseScreen {
             }
         });
 
-        reintentar.setSize(150, 70);
-        menu.setSize(150, 70);
-        reintentar.setPosition(100, 20);
+        rejugar.setSize(270, 70);
+        menu.setSize(200, 70);
+        rejugar.setPosition(50, 20);
         menu.setPosition(540 - menu.getWidth(), 20);
 
         stage.addActor(texto);
-        stage.addActor(reintentar);
+        stage.addActor(rejugar);
         stage.addActor(menu);
 
         nivelsuperadomusic = game.getManager().get("audio/nivelsuperadomusic.mp3");
