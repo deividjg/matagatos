@@ -25,7 +25,7 @@ public class WinScreen extends BaseScreen {
         stage = new Stage(new FitViewport(640, 360));
         skin = new Skin(Gdx.files.internal("skin/rainbow-ui.json"));
 
-        texto = new Texto("¡Nivel superado!", new Vector2(200, 250));
+        texto = new Texto("¡Bien, Esquivaste a ese maldito jabalí!", new Vector2(20, 250));
         rejugar = new TextButton("Rejugar", skin);
         menu = new TextButton("Menu", skin);
         rejugar.addCaptureListener(new ChangeListener() {

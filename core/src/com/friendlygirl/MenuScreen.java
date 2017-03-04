@@ -84,7 +84,7 @@ public class MenuScreen extends BaseScreen {
 
         stage.addActor(image);
         stage.addActor(inicio);
-        stage.addActor(puntos);
+        //stage.addActor(puntos);
         stage.addActor(salir);
         stage.addActor(musicOnOff);
 
@@ -110,6 +110,7 @@ public class MenuScreen extends BaseScreen {
     public void dispose() {
         stage.dispose();
         menumusic.dispose();
+
     }
 
     @Override

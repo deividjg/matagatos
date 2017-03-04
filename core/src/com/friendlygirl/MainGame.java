@@ -24,19 +24,21 @@ public class MainGame extends Game {
         manager.load("jugador.png", Texture.class );
         manager.load("suelo.png", Texture.class );
         manager.load("sobresuelo.png", Texture.class );
-        manager.load("pincho.png", Texture.class );
-        manager.load("pinchoinverso.png", Texture.class);
+        manager.load("gato.png", Texture.class );
+        manager.load("piedra.png", Texture.class);
         manager.load("logo.png", Texture.class);
         manager.load("gameover.png", Texture.class);
-        manager.load("moneda.png", Texture.class);
+        manager.load("fondo.png", Texture.class);
+        manager.load("pumba.png", Texture.class);
         manager.load("audio/gamemusic.ogg", Music.class);
         manager.load("audio/menumusic.ogg", Music.class);
         manager.load("audio/gameovermusic.ogg", Music.class);
         manager.load("audio/maxpuntmusic.ogg", Music.class);
         manager.load("audio/boing.ogg", Sound.class);
         manager.load("audio/grito.ogg", Sound.class);
-        manager.load("audio/moneda.mp3", Sound.class);
         manager.load("audio/nivelsuperadomusic.mp3", Music.class);
+        manager.load("audio/jabali.ogg", Sound.class);
+
         manager.finishLoading();
 
         preferences = Gdx.app.getPreferences("Preferencias");
